@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .focused-state input:focus + label,
+    .focused-state textarea:focus + label,
+    .focused-state textarea:valid + label,
+    .focused-state input:valid + label{
+        @apply top-0 -translate-y-1/2 p-1 py-0 px-2 border border-gray-600
+    }
+}
