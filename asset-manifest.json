@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/reactjs-basics-formic-operations/static/css/main.213ccc38.css",
+    "main.js": "/reactjs-basics-formic-operations/static/js/main.9a82079c.js",
+    "index.html": "/reactjs-basics-formic-operations/index.html",
+    "main.213ccc38.css.map": "/reactjs-basics-formic-operations/static/css/main.213ccc38.css.map",
+    "main.9a82079c.js.map": "/reactjs-basics-formic-operations/static/js/main.9a82079c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.213ccc38.css",
+    "static/js/main.9a82079c.js"
+  ]
+}
