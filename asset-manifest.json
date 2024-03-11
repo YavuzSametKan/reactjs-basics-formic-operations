@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/reactjs-basics-formic-operations/static/css/main.d3f6f6fc.css",
-    "main.js": "/reactjs-basics-formic-operations/static/js/main.11bc2d12.js",
-    "index.html": "/reactjs-basics-formic-operations/index.html",
-    "main.d3f6f6fc.css.map": "/reactjs-basics-formic-operations/static/css/main.d3f6f6fc.css.map",
-    "main.11bc2d12.js.map": "/reactjs-basics-formic-operations/static/js/main.11bc2d12.js.map"
+    "main.css": "/reactjs-basics-formik-operations/static/css/main.d3f6f6fc.css",
+    "main.js": "/reactjs-basics-formik-operations/static/js/main.375dfc10.js",
+    "index.html": "/reactjs-basics-formik-operations/index.html",
+    "main.d3f6f6fc.css.map": "/reactjs-basics-formik-operations/static/css/main.d3f6f6fc.css.map",
+    "main.375dfc10.js.map": "/reactjs-basics-formik-operations/static/js/main.375dfc10.js.map"
   },
   "entrypoints": [
     "static/css/main.d3f6f6fc.css",
-    "static/js/main.11bc2d12.js"
+    "static/js/main.375dfc10.js"
   ]
 }
