@@ -294,6 +294,95 @@ export default Contact;
 
 Bu şekilde, Formik ile HTML form etiketlerini kullanarak form işlemlerini yönetebilirsiniz.
 
+### `useFormik` Hook'unun Detayları
+#### values niteliği
+Normal olarak useFormik hook'unu kullandığımız zaman inputlarımıza initial value vermek istediğimizde bu işlemin başarısız olduğunu göreceksinizdir. Burada yarıma `values` niteliği koşuyor.
+
+Kullanım: 
+```jsx
+import { useFormik } from 'formik'
+
+function Contact() {
+    const {
+            handleSubmit,
+            handleChange,
+            values, //👈 destructing ile values niteliğini hook'umuzdan alıyoruz
+        } = useFormik({
+        initialValues: {
+            firstName: 'Yavuz Samet',
+            lastName: 'Kan',
+            email: 'yssk.personal@gmail.com',
+            message: 'Hello, World!'
+        },
+        onSubmit: async (values, bag) => {
+            console.log(values)
+        }
+    })
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                name='firstName'
+                type='text'
+                onChange={handleChange('firstName')}
+                value={values.firstName} //👈 input'un value değerine values objesinin altındaki uygun niteliği seçiyoruz. 
+            />
+            ...
+            <button type='submit'>Submit</button>
+        </form>
+    )
+}
+
+export default Contact
+```
+Bu şekilde sizlerde inputlarınıza initial değerler verebilirsiniz.
+
+### Kullanıcı Form'u Submit Ettiğinde Bir Sonraki İşlem İçin İlk İşlemin Bitmesini Bekletmek (isSubmitting)
+Bu kısmı yaşadığım bir örnek ile açıklamak isterim. Evimizin internet faturasını ödemek için sağlayıcı firmamızın ürettiği ödeme paneline girip kart bilgilerimi girmiştim ve form'u submit etmiştim. İşlem uzun sürdü ve hata olduğunu düşünüp formu tekrar submit ettim ve işlem ikinci submitten sonra tamamlanmıştı. Daha sonrasında bankacılık uygulamasına girince hesamından 2 kere aynı ücretin tahsil edilmiş olduğunu gördüm. ÇOK SİNİR BOZUCU BİR BUG. Eminim sizlerde bu hatayı ya yaşamışsınızdır ya da yaşayacaksınızdır. Gelin biz bu hatayı kullanıcılarımıza yaşatmamak ve kanser etmemek için `isSubmitting` niteliğini öğrenelim.
+
+Kullanım:
+```jsx
+import { useFormik } from 'formik'
+
+function Contact() {
+    const {
+            handleSubmit,
+            handleChange,
+            values,
+            isSubmitting //👈 destructing ile isSubmiting niteliğini hook'umuzdan alıyoruz
+        } = useFormik({
+        initialValues: {
+            firstName: 'Yavuz Samet',
+            lastName: 'Kan',
+            email: 'yssk.personal@gmail.com',
+            message: 'Hello, World!'
+        },
+        onSubmit: async (values, bag) => {
+            console.log(values)
+        }
+    })
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                name='firstName'
+                type='text'
+                onChange={handleChange('firstName')}
+                value={values.firstName}
+                disabled={isSubmitting} //👈 form submitting durumundayken input'u disable ediyoruz.
+            />
+            ...
+            <button
+                type='submit'
+                disabled={isSubmitting} //👈 form submitting durumundayken butonu disable ediyoruz.
+            >
+                Submit
+            </button>
+        </form>
+    )
+}
+
+export default Contact
+```
+Bu şekilde insanların form submit edilirken formu tekrar tekrar submit etmelerini, form üzerinde değişiklik yapmalarını engelleyebilir, insanları hatalı kodunuzla uğraşmaktan kurtarabilirsiniz. :)  
 ## Açıklama
 
 [Formik Official Docs](https://formik.org/docs/overview)
