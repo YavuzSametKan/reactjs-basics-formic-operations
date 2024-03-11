@@ -36,8 +36,6 @@ function Contact() {
         validationSchema
     })
 
-
-
     return (
         <section className='w-full h-dvh flex flex-col items-center justify-center'>
             <div className={'p-5 border border-gray-600 w-2/5 rounded-tl rounded-tr text-center'}>
@@ -128,7 +126,7 @@ function Contact() {
                             className={`absolute select-none bg-white left-4 top-7 -translate-y-1/2 transition-all rounded
                                        ${errors.age && touched.age && 'text-red-700'}`}
                         >
-                            Age
+                            Yaş
                         </label>
                     </div>
                     {errors.age && touched.age &&

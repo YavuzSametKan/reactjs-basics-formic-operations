@@ -383,10 +383,192 @@ function Contact() {
 export default Contact
 ```
 Bu şekilde insanların form submit edilirken formu tekrar tekrar submit etmelerini, form üzerinde değişiklik yapmalarını engelleyebilir, insanları hatalı kodunuzla uğraşmaktan kurtarabilirsiniz. :)  
-## Açıklama
 
-[Formik Official Docs](https://formik.org/docs/overview)
+### Form Submit Edildiğinde Form'u Resetlemek
 
-[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formik-operations/)
+Bu işlem için `bag` parametresini kullanıyoruz. 
 
-The learning process continues...
+Kullanım:
+```jsx
+const formik = useFormik({
+    ...
+    onSubmit: async (values, bag) => {
+        bag.resetForm()//👈 Submit işleminden sonra formu yenilemek
+    }
+    ...
+})
+```
+
+### Form Validasyon'u
+
+Bu aşamada formik ile tam uyumlu olan [**yup**](https://github.com/jquense/yup) paketini kullanacağız.
+
+İsterseniz örnek üzerinden nasıl yapılacağına bakalım:
+
+#### 1. Adım yup paketini projeye kurun
+
+```
+npm i yup
+```
+
+#### 2. Adım Validasyon Yapınızı Kodlayın
+
+Ben bu aşamada okunurluğu arttırmak için bulunduğum dizine validations.js isimli bir dosya oluşturacağım ve bu dosyaya tüm validation yapımı yazacağım.
+
+Kodları ve yorum satırlarını incelemenizin anlamanız için yeterli olacağını düşünüyorum.
+
+validation.js içeriği:
+```jsx
+import { object, string, number } from 'yup'
+
+const REQUIRED_MESSAGE = 'Bu alan zorunludur!' //👈 zorunlu alan mesajım
+
+const contactSchema = object({
+    firstName: string().required(REQUIRED_MESSAGE), //👈 fonksiyonların içine kendi hata mesajlarınızı yazabilirsiniz
+    lastName: string().required(REQUIRED_MESSAGE),  // yazmazsanız varsayılan olarak ingilizce hata mesajları verecektir.
+    age: number()
+            .positive('Negatif olamaz!')
+            .integer('Tam sayı girin!')
+            .max(125, 'Maksimum 125 olabilir!')
+            .required(REQUIRED_MESSAGE),
+    email: string().email('Geçerli bir e-mail değil!').required(REQUIRED_MESSAGE),
+    message: string().min(25, 'Minimum 25 karakter!').max(500, 'Maksimum 500 karakter!').required(REQUIRED_MESSAGE)
+})
+
+export default contactSchema
+```
+
+### 3. Adım Yazdığınız Yapıyı Form'da Kullanın
+
+Kodları ve yorum satırlarını incelemenizin anlamanız için yeterli olacağını düşünüyorum.
+
+
+Kullanım:
+```jsx
+import React from 'react';
+import { useFormik } from 'formik';
+import validationSchema from './validations' //👈 validations.js dosyasından contactSchema objesini validationSchema isminde import ediyoorum.
+
+function Contact() {
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            age: '',
+            email: '',
+            message: ''
+        },
+        onSubmit: values => {
+            console.log(values)
+        },
+        validationSchema //👈 useFormik objesinde validationSchema'yı kullanıyorum.
+    })
+
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <div className='input-errMsg-container'>
+                <input
+                    name='firstName'
+                    type='text'
+                    onChange={formik.handleChange('firstName')}
+                    value={formik.values.firstName}
+                    disabled={formik.isSubmitting}
+                    onBlur={formik.handleBlur} //👈 input'ta bir kere odaklanıp odak bozunca bu bilgiyi formik'e iletir.
+                />
+                {//👇 firstName input'unda hata varsa ve bu input'ta onBlur event'ı tetiklenirse error mesajını div içinde yaz.
+                    formik.errors.firstName && formik.touched.firstName &&
+                    <div className='text-red-700'>
+                        {formik.errors.firstName}
+                    </div>
+                }
+            </div>
+            ...
+            <button
+                type='submit'
+                disabled={formik.isSubmitting} //👈 form submitting durumundayken butonu disable ediyoruz.
+            >
+                Submit
+            </button>
+        </form>
+    )
+}
+
+export default Contact
+```
+
+Bu şekilde sizlerde formlarınıza validation kontolü yazabilirsiniz.
+
+### Backend'den Gelen Verileri Kontorol Edip Submit İşlemini Engellemek
+
+Bu aşamayı simüle etmek için elbette backend anlatmayacağım. Bir email array'i oluşturup içerisine halihazırda kayıtlı olduğu için bir daha kayıt yaptıramayacak email'leri koyacağız. Bu email sahiplerini ikinci kayıt denemelerinde uyaracağız.
+
+Hadi Başlayalım:
+
+```jsx
+import {useFormik} from 'formik'
+import validationSchema from './validations'
+function Register() {
+    const formik = useFormik({
+        ...
+        onSubmit: async (values, bag) => {
+            const registeredEmails = [ //👈 Kayıtlı email'ler array'i
+                'yssk.personal@gmail.com',
+                'yssk32000@gmail.com'
+            ]
+            if(registeredEmails.includes(formik.values.email)){ //👈 Girilen email'in bu email'lerden biri olup olmadığının kontrolü
+                return bag.setErrors( //👈 Eğer bu email'lerden biriyse, email niteliğine error'u yerleştir.
+                    {
+                        email: 'Bu e-mail adresi zaten kullanılıyor.'
+                    }
+                )
+            }
+            bag.resetForm() // form'u submit işleminden sonra resetler.
+        },
+        validationSchema
+    })
+
+    return (
+            <form onSubmit={handleSubmit}>
+                ...
+                <div className='input-errorMsg-container'> //👈 örnek bir input error message kullanımı
+                    <input
+                        id='email'
+                        name='email'
+                        type="email"
+                        placeholder='email'
+                        className={`border-gray-600 border rounded p-4 outline-none w-full disabled:bg-gray-200
+                                   ${errors.email && touched.email && 'ring-1 ring-red-700'}`}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                        disabled={isSubmitting}
+                    />
+                    {errors.email && touched.email &&
+                        <div className='text-red-700'>
+                            {errors.email}
+                        </div>
+                    }
+                </div>
+                ...
+                <button
+                    className='border border-gray-600 rounded p-4 hover:bg-gray-200 transition font-bold disabled:bg-gray-200'
+                    type='submit'
+                    disabled={isSubmitting}
+                >
+                    Submit
+                </button>
+            </form>
+)
+}
+
+export default Register
+```
+Bu şekilde backend'den gelen verilerinizi kontrol edip ona göre submit işlemini onaylayabilirsiniz.
+
+### Kaynak ve Linkler
+
+Öğrenirken yazdığım uygumanın [live demo'su](https://yavuzsametkan.github.io/reactjs-basics-formik-operations/)
+
+Formik Pakedinin [Resmi Dokümantasyonu](https://formik.org/docs/overview)
+
+Yup Pakedinin [Resmi Dokümantasyonu](https://github.com/jquense/yup)
