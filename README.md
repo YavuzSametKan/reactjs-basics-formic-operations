@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# Formik
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Formik Nedir, Neden Kullanılır?
 
-## Available Scripts
+Formik, React uygulamalarında form yönetimi için kullanılan bir kütüphanedir. Formik, form işlemlerini kolaylaştıran birçok özellik ve yardımcı işlev sunar. Bazı temel özellikleri şunlardır:
 
-In the project directory, you can run:
+1. **Form Durumu Yönetimi:** Formik, formdaki girdi değerlerini, geçerlilik durumunu ve diğer form durumlarını yönetmek için bir konteynır sağlar. Böylece, form verilerini tek bir yerde tutabilirsiniz.
+2. **Form Geçerliliği ve Doğrulama:** Formik, formun geçerliliğini izlemek ve form alanlarını doğrulamak için kolay bir yapı sunar. Bu, girdilerin doğruluğunu kontrol etmek ve gerekirse kullanıcıya geri bildirim sağlamak için kullanışlıdır.
+3. **Form Gönderimi ve Validasyonu:** Formik, formun gönderilmesini ve gönderim öncesindeki ek işlemleri yönetmek için işlevsellik sağlar. Bu, sunucuya veri göndermeden önce veri doğrulaması ve ön işleme gibi adımları gerçekleştirmenize olanak tanır.
+4. **Dokunulabilirlik ve Erişilebilirlik:** Formik, dokunulabilir ve erişilebilir form deneyimleri oluşturmayı kolaylaştırır. Örneğin, girdi alanlarına odaklanma, klavye gezinimi ve ekran okuyucu uyumluluğu gibi özellikler üzerinde odaklanır.
 
-### `npm start`
+### React'te Formik Kullanmanın Avantajları
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Daha Düzenli Kod:** Form işlemleri, Formik gibi özel bir kütüphane kullanılarak daha düzenli ve sade bir şekilde yönetilebilir. Formik, geliştiricilere form durumunu ve işlemlerini tek bir yerde toplamalarını sağlar, bu da kodun daha okunabilir ve sürdürülebilir olmasını sağlar.
+2. **Performans ve Verimlilik:** Formik, performansı artırmak ve gereksiz yeniden render işlemlerini önlemek için optimize edilmiştir. Bu, büyük ve karmaşık form yapılarında bile hızlı ve verimli bir kullanıcı deneyimi sağlar.
+3. **Kolay Doğrulama ve Geçerlilik Kontrolü:** Formik, form alanlarını doğrulamak ve geçerliliğini izlemek için kolay bir arayüz sunar. Bu, kullanıcıların doğru verileri girmesini sağlamak için önemlidir ve aynı zamanda form işlemlerini daha güvenli hale getirir.
+4. **Genişletilebilirlik:** Formik, genişletilebilir bir yapıya sahiptir ve ihtiyaca göre özelleştirilebilir. Bu, özel form işlemleri ve gereksinimler için kolayca genişletilebilir bir çözüm sunar.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Bu nedenlerden dolayı, React uygulamalarında form işlemleri için Formik sıklıkla tercih edilen bir kütüphanedir.
 
-### `npm test`
+### Basitçe Formik Kütüphanesinin Kullanımı
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Formik kütüphanesini React projesine eklemelisiniz.
+   
+npm için:
+```
+npm install formik
+```
+yarn için:
+```
+yarn add formik
+```
 
-### `npm run build`
+Ardından, bir form bileşeni oluşturarak Formik'i kullanmaya başlayabilirsiniz. Örneğin, bir kullanıcı kayıt formunu ele alalım:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const initialValues = {
+  username: '',
+  email: '',
+  password: ''
+};
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+const onSubmit = (values) => {
+  console.log(values); // Form verilerini konsola yazdırır, gerçek uygulamada bu verileri sunucuya gönderebilirsiniz.
+};
 
-### `npm run eject`
+const validate = (values) => {
+  let errors = {};
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  if (!values.username) {
+    errors.username = 'Kullanıcı adı zorunludur';
+  }
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  if (!values.email) {
+    errors.email = 'E-posta zorunludur';
+  }
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  if (!values.password) {
+    errors.password = 'Şifre zorunludur';
+  }
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  return errors;
+};
 
-## Learn More
+const MyForm = () => (
+  <Formik
+    initialValues={initialValues}
+    onSubmit={onSubmit}
+    validate={validate}
+  >
+    <Form>
+      <div>
+        <label htmlFor="username">Kullanıcı Adı</label>
+        <Field type="text" id="username" name="username" />
+        <ErrorMessage name="username" component="div" />
+      </div>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+      <div>
+        <label htmlFor="email">E-posta</label>
+        <Field type="email" id="email" name="email" />
+        <ErrorMessage name="email" component="div" />
+      </div>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+      <div>
+        <label htmlFor="password">Şifre</label>
+        <Field type="password" id="password" name="password" />
+        <ErrorMessage name="password" component="div" />
+      </div>
 
-### Code Splitting
+      <button type="submit">Gönder</button>
+    </Form>
+  </Formik>
+);
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+export default MyForm;
+```
+Bu örnekte, Formik'in sunduğu Formik, Form, Field, ve ErrorMessage bileşenlerini kullanarak bir form oluşturduk.
 
-### Analyzing the Bundle Size
+1. **Formik bileşeni**, formun genel durumunu yönetir ve formun başlangıç değerlerini, gönderim işlemlerini ve doğrulama işlemlerini yönetir.
+2. **Form bileşeni**, bir form alanı kümesini temsil eder ve içindeki alanların değerlerini takip eder.
+3. **Field bileşeni**, form alanlarını oluşturur ve bu alanların değerlerini yönetir.
+4. **Error Message bileşeni**, form alanlarının doğrulama hatalarını görüntüler.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Bu şekilde, Formik kullanarak kolayca form işlemlerini yönetebilir ve geliştirebilirsiniz.
