@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Reactjs Temel Formik İşlemleri
 
 ### Formik Nedir, Neden Kullanılır?
@@ -34,7 +33,7 @@ yarn add formik
 
 Ardından, bir form bileşeni oluşturarak Formik'i kullanmaya başlayabilirsiniz. Örneğin, bir kullanıcı kayıt formunu ele alalım:
 
-```
+```jsx
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -106,6 +105,194 @@ Bu örnekte, Formik'in sunduğu Formik, Form, Field, ve ErrorMessage bileşenler
 4. **Error Message bileşeni**, form alanlarının doğrulama hatalarını görüntüler.
 
 Bu şekilde, Formik kullanarak kolayca form işlemlerini yönetebilir ve geliştirebilirsiniz.
+
+### Formik'i HTML Form Etiketleri ile Kullanmak
+
+Formik ile kendi HTML form etiketlerinizi kullanmak oldukça basittir. Formik, form yönetimi için bir konteynır sağlar ve bu formun içinde herhangi bir HTML form etiketini kullanabilirsiniz. Bu işlemi yapmak için 2 yöntem mevcuttur ikisinden birini tercih edebilirsiniz. Hangisini tercih etmek istediğiniz size kalmıştır.
+
+### 1. YÖNTEM (Formik Component'ı ile)
+
+#### Adım 1: Gerekli Paketleri İçe Aktarın
+İlk adımda, Formik paketlerini projenize eklemeniz gerekir. Bu adımı gerçekleştirmek için proje dizininizde terminali açın ve şu komudu çalıştırın:
+
+ ```
+ npm install formik
+ ```
+
+#### Adım 2: Formik Konteynırını Oluşturun
+Form etiketlerini Formik ile yönetmek için `Formik` bileşenini kullanacağız. İlk olarak, `Formik` bileşenini içe aktarın ve ardından HTML form etiketlerini içeren bir bileşen oluşturun.
+
+```jsx
+import React from 'react';
+import { Formik } from 'formik';
+
+function Contact() {
+    return (
+        <Formik
+            initialValues={{
+                firstName: '',
+                lastName: '',
+                email: '',
+                message: ''
+            }}
+            onSubmit={(values) => { // Form submit edilince olacak işlemler
+                console.log(values)
+            }}
+        >
+            {/* Form içeriği buraya gelecek */}
+        </Formik>
+    )
+}
+
+export default Contact;
+```
+
+#### Adım 3: Form Alanlarını Oluşturun
+Form alanlarını oluşturmak için HTML form etiketlerini kullanabilirsiniz. Ancak, form submit olduğunda reaksiyon sağlaması için form etiketinin `onSubmit` olayına Formik tarafından sağlanan `handleSubmit` fonksiyonunu vermelisiniz. Bir de `onChange` olayı ile değerleri güncellemek için Formik tarafından sağlanan `handleChange` fonksiyonunu kullanmalısınız.
+
+```jsx
+import React from 'react'
+import {Formik} from 'formik'
+
+function Contact() {
+   return (
+       <Formik
+           initialValues={{
+               firstName: '',
+               lastName: '',
+               email: '',
+               message: ''
+           }}
+           onSubmit={(values) => { // Form submit edilince olacak işlemler
+               console.log(values)
+           }}
+       >
+           {({handleSubmit, handleChange}) => (
+           <form onSubmit={handleSubmit}>
+               <input
+                   name="firstName"
+                   type="text"
+                   placeholder="İsim"
+                   onChange={handleChange('firstName')}
+               />
+               <input
+                   name="lastName"
+                   type="text"
+                   placeholder="Soyisim"
+                   onChange={handleChange('lastName')}
+               />
+               <input
+                   name="email"
+                   type="text"
+                   placeholder="E-mail"
+                   onChange={handleChange('email')}
+               />
+               <textarea
+                   name="message"
+                   placeholder="Mesaj"
+                   onChange={handleChange('message')}
+               />
+               <button type="submit">Gönder</button>
+           </form>
+           )}
+       </Formik>
+   )
+}
+
+export default Contact
+```
+
+### 2. YÖNTEM (useFormik Hook'u ile)
+
+#### Adım 1: Gerekli Paketleri İçe Aktarın
+İlk adımda, Formik paketlerini projenize eklemeniz gerekir. Bu adımı gerçekleştirmek için proje dizininizde terminali açın ve şu komudu çalıştırın:
+
+ ```
+ npm install formik
+ ```
+
+#### Adım 2: Formik Konteynırını Oluşturun
+Form etiketlerini Formik ile yönetmek için `useFormik` hook'unu kullanacağız. İlk olarak, `useFormik` hook'unu içe aktarın ve form objesini oluşturun.
+
+```jsx
+import React from 'react';
+import { useFormik } from 'formik';
+
+function Contact() {
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            message: ''
+        },
+        onSubmit: values => { // Form submit edilince olacak işlemler
+            console.log(values);
+        }
+    });
+
+    return (
+        {/* Form içeriği buraya gelecek */}
+    );
+}
+
+export default Contact;
+```
+
+#### Adım 3: Form Alanlarını Oluşturun
+Form alanlarını oluşturmak için HTML form etiketlerini kullanabilirsiniz. Ancak, form submit olduğunda reaksiyon sağlaması için form etiketinin `onSubmit` olayına Formik tarafından sağlanan `handleSubmit` fonksiyonunu vermelisiniz. Bir de `onChange` olayı ile değerleri güncellemek için Formik tarafından sağlanan `handleChange` fonksiyonunu kullanmalısınız.
+
+```jsx
+import React from 'react';
+import { useFormik } from 'formik';
+
+function Contact() {
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            message: ''
+        },
+        onSubmit: values => {
+            console.log(values);
+        }
+    });
+
+    return (
+        <form onSubmit={formik.handleSubmit}>
+            <input
+                name="firstName"
+                type="text"
+                placeholder="İsim"
+                onChange={formik.handleChange}
+            />
+            <input
+                name="lastName"
+                type="text"
+                placeholder="Soyisim"
+                onChange={formik.handleChange}
+            />
+            <input
+                name="email"
+                type="email"
+                placeholder="E-mail"
+                onChange={formik.handleChange}
+            />
+            <textarea
+                name="message"
+                placeholder="Mesaj"
+                onChange={formik.handleChange}
+            />
+            <button type="submit">Gönder</button>
+        </form>
+    );
+}
+
+export default Contact;
+```
+
+Bu şekilde, Formik ile HTML form etiketlerini kullanarak form işlemlerini yönetebilirsiniz.
 
 ## Açıklama
 

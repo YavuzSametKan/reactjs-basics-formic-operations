@@ -3,10 +3,16 @@
 @tailwind utilities;
 
 @layer components {
-    .focused-state input:focus + label,
-    .focused-state input:not(:placeholder-shown) + label,
-    .focused-state textarea:focus + label,
-    .focused-state textarea:not(:placeholder-shown) + label
+    .input-container input[type='text']:focus + label,
+    .input-container input[type='text']:not(:placeholder-shown) + label,
+    .input-container input[type='email']:focus + label,
+    .input-container input[type='email']:not(:placeholder-shown) + label,
+    .input-container input[type='password']:focus + label,
+    .input-container input[type='password']:not(:placeholder-shown) + label,
+    .input-container input[type='number']:focus + label,
+    .input-container input[type='number']:not(:placeholder-shown) + label,
+    .input-container textarea:focus + label,
+    .input-container textarea:not(:placeholder-shown) + label
     {
         @apply top-0 -translate-y-1/2 p-1 py-0 px-2 border border-gray-600
     }
