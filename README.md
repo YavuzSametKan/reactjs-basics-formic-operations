@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Reactjs Temel Formik İşlemleri
 
 ### Formik Nedir, Neden Kullanılır?
