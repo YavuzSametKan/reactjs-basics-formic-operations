@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Reactjs Temel Formic İşlemleri
+# Reactjs Temel Formik İşlemleri
 
 ### Formik Nedir, Neden Kullanılır?
 
@@ -109,16 +109,8 @@ Bu şekilde, Formik kullanarak kolayca form işlemlerini yönetebilir ve gelişt
 
 ## Açıklama
 
-[Formic Official Docs](https://formik.org/docs/overview)
+[Formik Official Docs](https://formik.org/docs/overview)
 
-[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formic-operations/)
-
-The learning process continues...
-
-# Reactjs Basics Formic Operations
-
-[Formic Official Docs](https://formik.org/docs/overview)
-
-[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formic-operations/)
+[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formik-operations/)
 
 The learning process continues...
