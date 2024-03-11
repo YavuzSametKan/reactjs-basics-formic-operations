@@ -1,4 +1,4 @@
-# Formik
+# Reactjs Temel Formic İşlemleri
 
 ### Formik Nedir, Neden Kullanılır?
 
@@ -105,3 +105,12 @@ Bu örnekte, Formik'in sunduğu Formik, Form, Field, ve ErrorMessage bileşenler
 4. **Error Message bileşeni**, form alanlarının doğrulama hatalarını görüntüler.
 
 Bu şekilde, Formik kullanarak kolayca form işlemlerini yönetebilir ve geliştirebilirsiniz.
+
+## Açıklama
+
+[Formic Official Docs](https://formik.org/docs/overview)
+
+[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formic-operations/)
+
+The learning process continues...
+
