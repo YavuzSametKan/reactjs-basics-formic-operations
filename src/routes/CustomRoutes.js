@@ -1,4 +1,4 @@
-import Contact from "../pages/Contact";
+import Contact from "../pages/Contact/Contact";
 
 export const MainRoutes = [
     {

@@ -336,7 +336,7 @@ export default Contact
 ```
 Bu şekilde sizlerde inputlarınıza initial değerler verebilirsiniz.
 
-### Kullanıcı Form'u Submit Ettiğinde Bir Sonraki İşlem İçin İlk İşlemin Bitmesini Bekletmek (isSubmitting)
+#### Kullanıcı Form'u Submit Ettiğinde Bir Sonraki İşlem İçin İlk İşlemin Bitmesini Bekletmek (isSubmitting)
 Bu kısmı yaşadığım bir örnek ile açıklamak isterim. Evimizin internet faturasını ödemek için sağlayıcı firmamızın ürettiği ödeme paneline girip kart bilgilerimi girmiştim ve form'u submit etmiştim. İşlem uzun sürdü ve hata olduğunu düşünüp formu tekrar submit ettim ve işlem ikinci submitten sonra tamamlanmıştı. Daha sonrasında bankacılık uygulamasına girince hesamından 2 kere aynı ücretin tahsil edilmiş olduğunu gördüm. ÇOK SİNİR BOZUCU BİR BUG. Eminim sizlerde bu hatayı ya yaşamışsınızdır ya da yaşayacaksınızdır. Gelin biz bu hatayı kullanıcılarımıza yaşatmamak ve kanser etmemek için `isSubmitting` niteliğini öğrenelim.
 
 Kullanım:
