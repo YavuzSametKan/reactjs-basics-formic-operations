@@ -110,6 +110,6 @@ Bu şekilde, Formik kullanarak kolayca form işlemlerini yönetebilir ve gelişt
 
 [Formik Official Docs](https://formik.org/docs/overview)
 
-[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formic-operations/)
+[Currently Live Demo](https://yavuzsametkan.github.io/reactjs-basics-formik-operations/)
 
 The learning process continues...
