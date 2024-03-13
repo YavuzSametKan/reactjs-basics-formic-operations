@@ -17,7 +17,7 @@ const formik = {
         if(emails.includes(values.email)){
             return bag.setErrors(
                 {
-                    email: 'Bu e-mail adresi zaten kullanılıyor.'
+                    email: 'Bu e-posta adresi engellendi.'
                 }
             )
         }
