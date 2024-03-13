@@ -8,12 +8,12 @@ import SubmitBtn from "../../components/SubmitBtn"
 function Contact() {
     const formik = useFormik(formikConfig)
     return (
-        <section className='w-full py-5 min-h-screen flex flex-col items-center justify-center md:w-11/12'>
+        <section className='w-full py-5 min-h-screen flex flex-col items-center justify-center'>
 
             <FormHeader title='İletişim'/>
 
             <form
-                className='p-5 border border-t-0 border-gray-600 w-2/5 rounded-bl rounded-br flex flex-col gap-5'
+                className='p-5 border border-t-0 border-gray-600 w-2/5 rounded-bl rounded-br flex flex-col gap-5 max-[1024px]:w-11/12'
                 onSubmit={formik.handleSubmit}
             >
 
