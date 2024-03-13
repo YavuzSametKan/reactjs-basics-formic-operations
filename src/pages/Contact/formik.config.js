@@ -1,13 +1,7 @@
 import validationSchema from "./validations";
+import textFields from "./textFields";
 
-const formik = {
-    initialValues: {
-        firstName: '',
-        lastName: '',
-        age: '',
-        email: '',
-        message: ''
-    },
+const formikConfig = {
     onSubmit: async (values, bag) => {
         await new Promise(r => setTimeout(r, 2000)) // For simulating asynchronous delay
         const emails = [
@@ -24,7 +18,11 @@ const formik = {
         bag.resetForm() // for resetting the inputs
         console.log(values)
     },
+    initialValues: {},
     validationSchema
 }
 
-export default formik
+/* To automatically assign objects generated in the textFields array to there */
+textFields.forEach(tF => formikConfig.initialValues[tF.purpose] = '')
+
+export default formikConfig

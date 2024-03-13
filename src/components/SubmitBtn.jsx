@@ -1,3 +1,5 @@
+import React from "react";
+
 function SubmitBtn({text, formik}) {
     return (
         <button
@@ -10,4 +12,4 @@ function SubmitBtn({text, formik}) {
     )
 }
 
-export default SubmitBtn
+export default React.memo(SubmitBtn)

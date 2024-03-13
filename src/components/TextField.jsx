@@ -24,7 +24,7 @@ function TextField({type, purpose, placeholder, formik}) {
                         id={purpose}
                         name={purpose}
                         className={`border-gray-600 border rounded p-4 outline-none w-full resize-none h-40 disabled:bg-gray-200
-                                   ${formik.errors.message && formik.touched.message && 'ring-1 ring-red-700'}`}
+                                   ${formik.errors[purpose] && formik.touched[purpose] && 'ring-1 ring-red-700'}`}
                         placeholder='' // for moving the label middle to top*/}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}

@@ -1,3 +1,5 @@
+import React from "react";
+
 function FormHeader({title}) {
     return (
         <div className='p-5 border border-gray-600 w-2/5 rounded-tl rounded-tr text-center'>
@@ -6,4 +8,4 @@ function FormHeader({title}) {
     )
 }
 
-export default FormHeader
+export default React.memo(FormHeader)
